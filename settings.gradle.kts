@@ -31,3 +31,4 @@ include(":common")
 
 include(":annotations")
 include(":annotation-processor")
+include(":gradle-plugin")
