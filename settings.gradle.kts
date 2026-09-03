@@ -18,9 +18,12 @@ dependencyResolutionManagement {
 
     versionCatalogs {
         create("kt").from(files("version-catalogs/kotlin.versions.toml"))
+        create("kotlinx").from(files("version-catalogs/kotlinx.versions.toml"))
     }
 }
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 rootProject.name = "integration-events"
+
+include(":common")
