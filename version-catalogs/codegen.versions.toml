@@ -9,3 +9,6 @@ ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = 
 # Kotlin Poet
 poet = { module = "com.squareup:kotlinpoet", version.ref = "poet" }
 poet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "poet" }
+
+[plugins]
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

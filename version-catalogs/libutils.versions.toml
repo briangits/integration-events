@@ -1,0 +1,5 @@
+[versions]
+buildKonfig = "0.22.0"
+
+[plugins]
+buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }

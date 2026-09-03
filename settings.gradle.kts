@@ -20,6 +20,7 @@ dependencyResolutionManagement {
         create("kt").from(files("version-catalogs/kotlin.versions.toml"))
         create("kotlinx").from(files("version-catalogs/kotlinx.versions.toml"))
         create("codegen").from(files("version-catalogs/codegen.versions.toml"))
+        create("libutils").from(files("version-catalogs/libutils.versions.toml"))
     }
 }
 
