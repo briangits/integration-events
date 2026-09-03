@@ -22,6 +22,15 @@ buildkonfig {
     }
 }
 
+gradlePlugin {
+    plugins {
+        create(rootProject.name) {
+            id = project.group.toString()
+            implementationClass = "${project.group}.IntegrationEventsPlugin"
+        }
+    }
+}
+
 fun DependencyHandlerScope.plugin(plugin: Provider<PluginDependency>) {
     val artifact =
         plugin.get().let {
