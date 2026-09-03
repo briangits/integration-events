@@ -1,0 +1,13 @@
+[versions]
+kotlin = "2.4.0"
+agp = "9.1.0"
+
+[libraries]
+# Tests
+test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
+
+
+[plugins]
+jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+multiplatform-android = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }

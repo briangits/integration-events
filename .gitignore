@@ -1,0 +1,12 @@
+# Gradle & Builds
+.gradle/
+build/
+
+# Kotlin
+.kotlin/
+
+# Local Configuration
+local.properties
+
+# IDEs
+.idea/
