@@ -19,6 +19,7 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("kt").from(files("version-catalogs/kotlin.versions.toml"))
         create("kotlinx").from(files("version-catalogs/kotlinx.versions.toml"))
+        create("codegen").from(files("version-catalogs/codegen.versions.toml"))
     }
 }
 
@@ -27,4 +28,6 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "integration-events"
 
 include(":common")
+
 include(":annotations")
+include(":annotation-processor")
