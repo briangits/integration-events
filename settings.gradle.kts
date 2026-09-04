@@ -39,4 +39,6 @@ include(":message-broker:common")
 include(":message-broker:publisher")
 include(":message-broker:consumer")
 
+include(":serialization")
+
 include(":producer")
