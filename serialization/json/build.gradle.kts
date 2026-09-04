@@ -8,7 +8,7 @@ kotlin {
         commonMain.dependencies {
             api(projects.serialization.core)
 
-            implementation(kotlinx.serialization.json)
+            api(kotlinx.serialization.json)
         }
     }
 }
