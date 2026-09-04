@@ -6,8 +6,9 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(projects.messageBrokers.core.common)
+            api(projects.messageBroker.common)
 
+            implementation(kotlinx.coroutines)
             implementation(kotlinx.serialization)
         }
     }
