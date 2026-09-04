@@ -36,3 +36,4 @@ include(":annotation-processor")
 include(":gradle-plugin")
 
 include(":message-brokers:core")
+include(":message-brokers:core:common")
