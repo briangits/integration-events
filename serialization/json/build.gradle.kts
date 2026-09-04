@@ -7,6 +7,8 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(projects.serialization.core)
+
+            implementation(kotlinx.serialization.json)
         }
     }
 }
