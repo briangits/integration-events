@@ -37,3 +37,4 @@ include(":gradle-plugin")
 
 include(":message-brokers:core")
 include(":message-brokers:core:common")
+include(":message-brokers:core:publisher")
