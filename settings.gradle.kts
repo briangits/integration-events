@@ -41,5 +41,6 @@ include(":message-broker:consumer")
 
 include(":serialization")
 include(":serialization:core")
+include(":serialization:json")
 
 include(":producer")
