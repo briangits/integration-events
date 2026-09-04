@@ -26,6 +26,9 @@ class Metadata(val format: BinaryFormat) {
             .also { cached[key] = value }
     }
 
+    inline operator fun <reified T> set(key: String, value: T) = set(key, value, serializer<T>())
+    inline infix fun <reified T> String.to(value: T) = set(this, value)
+
     fun clear(key: String) = entries.remove(key).also { cached.remove(key) }
     operator fun minusAssign(key: String) { clear(key) }
 }
