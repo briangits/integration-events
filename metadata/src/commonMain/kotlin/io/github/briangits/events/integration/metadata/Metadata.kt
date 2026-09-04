@@ -1,11 +1,11 @@
 package io.github.briangits.events.integration.metadata
 
-import kotlinx.serialization.BinaryFormat
+import io.github.briangits.events.integration.serialization.Serializer
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.serializer
 
-class Metadata(val format: BinaryFormat) {
-    constructor(format: BinaryFormat, entries: Map<String, ByteArray>) : this(format) {
+class Metadata(val serializer: Serializer) {
+    constructor(serializer: Serializer, entries: Map<String, ByteArray>) : this(serializer) {
         this.entries.putAll(entries)
     }
 
@@ -15,14 +15,14 @@ class Metadata(val format: BinaryFormat) {
     operator fun <T> get(key: String, serializer: KSerializer<T>): T? {
         @Suppress("UNCHECKED_CAST")
         return cached.getOrPut(key) {
-            entries[key]?.let { format.decodeFromByteArray(serializer, it) }
+            entries[key]?.let { this.serializer.deserialize(it, serializer) }
         } as T
     }
 
     inline operator fun <reified T> get(key: String): T? = get(key, serializer<T>())
 
     operator fun <T> set(key: String, value: T, serializer: KSerializer<T>) {
-        entries.set(key, format.encodeToByteArray(serializer, value))
+        entries.set(key, this.serializer.serialize(value, serializer))
             .also { cached[key] = value }
     }
 

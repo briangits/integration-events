@@ -43,7 +43,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(kotlinx.serialization)
+            implementation(projects.serialization.core)
         }
     }
 }
