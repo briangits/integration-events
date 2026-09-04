@@ -38,3 +38,5 @@ include(":gradle-plugin")
 include(":message-broker:common")
 include(":message-broker:publisher")
 include(":message-broker:consumer")
+
+include(":producer")
