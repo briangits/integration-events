@@ -29,7 +29,8 @@ abstract class Publisher(val format: BinaryFormat) {
 
         publish(
             Message(
-                route = Route(topic, name, key),
+                route = Route(topic, name),
+                key = key,
                 metadata = metadata,
                 data = data
             )
