@@ -3,16 +3,16 @@ package io.github.briangits.events.integration.broker.publisher
 import io.github.briangits.events.integration.broker.Message
 import io.github.briangits.events.integration.broker.Route
 import io.github.briangits.events.integration.metadata.Metadata
-import kotlinx.serialization.BinaryFormat
+import io.github.briangits.events.integration.serialization.Serializer
 import kotlinx.serialization.serializer
 
-abstract class Publisher(val format: BinaryFormat) {
+abstract class Publisher(val serializer: Serializer) {
     abstract suspend fun publish(message: Message<ByteArray>)
 
     suspend inline fun <reified T> publish(message: Message<T>) =
         publish(
             message.let {
-                val value = format.encodeToByteArray(serializer<T>(), it.data)
+                val value = serializer.serialize(it.data, serializer<T>())
                 Message(route = it.route, metadata = it.metadata, data = value)
             }
         )
@@ -24,7 +24,7 @@ abstract class Publisher(val format: BinaryFormat) {
         key: String? = null,
         block: Metadata.() -> Unit = {}
     ) {
-        val metadata = Metadata(format)
+        val metadata = Metadata(serializer)
             .apply { block() }
 
         publish(

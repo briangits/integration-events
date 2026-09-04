@@ -7,9 +7,9 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(projects.messageBroker.common)
+            api(projects.serialization.core)
 
             implementation(kotlinx.coroutines)
-            implementation(kotlinx.serialization)
         }
     }
 }

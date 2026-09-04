@@ -3,6 +3,7 @@ package io.github.briangits.events.integration.broker.consumer
 import io.github.briangits.events.integration.broker.Message
 import io.github.briangits.events.integration.broker.Route
 import io.github.briangits.events.integration.metadata.Metadata
+import io.github.briangits.events.integration.serialization.Serializer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
@@ -10,15 +11,14 @@ import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.serialization.BinaryFormat
 import kotlinx.serialization.serializer
 
-abstract class Consumer(val format: BinaryFormat) {
+abstract class Consumer(val serializer: Serializer) {
     abstract suspend fun consume(route: Route): Flow<Message<ByteArray>>
 
     suspend inline fun <reified T> consume(route: Route): Flow<Message<T>> =
         consume(route).map {
-            val data = format.decodeFromByteArray(serializer<T>(), it.data)
+            val data = serializer.deserialize(it.data, serializer<T>())
 
             Message(
                 route = it.route,
