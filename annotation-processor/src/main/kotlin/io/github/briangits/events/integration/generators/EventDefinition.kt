@@ -3,6 +3,7 @@ package io.github.briangits.events.integration.generators
 import com.google.devtools.ksp.symbol.KSAnnotation
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.squareup.kotlinpoet.CodeBlock
+import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.ksp.toClassName
 import com.squareup.kotlinpoet.withIndent
@@ -72,6 +73,8 @@ internal fun generateDefinition(declaration: KSClassDeclaration): GeneratedDefin
     val eventType = declaration.toClassName()
     val definitionType = IntegrationEventDefinition::class.asClassName()
 
+    val serializer = MemberName("kotlinx.serialization", "serializer")
+
     val definition = declaration.createDefinition()
 
     val codeBlock = CodeBlock.builder()
@@ -81,7 +84,7 @@ internal fun generateDefinition(declaration: KSClassDeclaration): GeneratedDefin
             withIndent {
                 add("name = %S,\n", definition.name)
                 add("topic = %S,\n", definition.topic)
-                add("serializer = %T.serializer()\n", eventType)
+                add("serializer = %M<%T>()\n", serializer, eventType)
             }
 
             add(") ")
