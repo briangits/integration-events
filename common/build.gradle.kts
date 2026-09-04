@@ -40,10 +40,4 @@ kotlin {
     linuxArm64()
 
     mingwX64()
-
-    sourceSets {
-        commonMain.dependencies {
-            implementation(kotlinx.serialization)
-        }
-    }
 }
