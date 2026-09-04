@@ -81,7 +81,6 @@ internal fun generateDefinition(declaration: KSClassDeclaration): GeneratedDefin
             withIndent {
                 add("name = %S,\n", definition.name)
                 add("topic = %S,\n", definition.topic)
-                add("typeName = %S,\n", eventType.toString())
                 add("serializer = %T.serializer()\n", eventType)
             }
 
