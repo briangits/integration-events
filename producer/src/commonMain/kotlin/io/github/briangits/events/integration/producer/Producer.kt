@@ -32,7 +32,7 @@ class Producer(
                 name = definition.name
             ),
             key = definition.key(data)?.toString(),
-            metadata = Metadata(config.serializer).apply { block() },
+            metadata = Metadata(config.serializer).apply { block() }.entries,
             data = config.serializer.serialize(data, serializer(type.type))
         )
 
