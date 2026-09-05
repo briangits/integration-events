@@ -5,5 +5,5 @@ import io.github.briangits.events.integration.broker.Route
 import kotlinx.coroutines.flow.Flow
 
 interface Consumer {
-    abstract suspend fun consume(route: Route): Flow<Message<ByteArray>>
+    suspend fun consume(route: Route): Flow<Message>
 }
