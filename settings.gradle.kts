@@ -35,9 +35,12 @@ include(":annotations")
 include(":annotation-processor")
 include(":gradle-plugin")
 
+include(":message-broker")
 include(":message-broker:common")
 include(":message-broker:publisher")
 include(":message-broker:consumer")
+
+include(":kafka")
 
 include(":serialization")
 include(":serialization:core")
