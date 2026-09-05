@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface Consumer {
     suspend fun consume(route: Route): Flow<Message>
+
+    suspend fun close()
 }
