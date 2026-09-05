@@ -11,13 +11,11 @@ subprojects {
             jvm()
 
             js {
-                browser()
                 nodejs()
             }
 
             @OptIn(ExperimentalWasmDsl::class)
             wasmJs {
-                browser()
                 nodejs()
             }
 
