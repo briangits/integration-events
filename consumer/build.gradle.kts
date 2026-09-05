@@ -40,4 +40,18 @@ kotlin {
     linuxArm64()
 
     mingwX64()
+
+    sourceSets {
+        commonMain.dependencies {
+            api(projects.common)
+
+            api(projects.serialization.core)
+            implementation(projects.serialization.json)
+
+            api(projects.metadata)
+            api(projects.messageBroker.consumer)
+
+            implementation(kotlinx.coroutines)
+        }
+    }
 }
