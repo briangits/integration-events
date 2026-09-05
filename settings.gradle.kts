@@ -44,3 +44,4 @@ include(":serialization:core")
 include(":serialization:json")
 
 include(":producer")
+include(":consumer")
