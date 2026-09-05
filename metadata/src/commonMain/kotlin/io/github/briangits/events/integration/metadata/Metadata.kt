@@ -4,12 +4,14 @@ import io.github.briangits.events.integration.serialization.Serializer
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.serializer
 
-class Metadata(val serializer: Serializer) {
+class Metadata(private val serializer: Serializer) {
     constructor(serializer: Serializer, entries: Map<String, ByteArray>) : this(serializer) {
         this.entries.putAll(entries)
     }
 
-    private val entries = mutableMapOf<String, ByteArray>()
+    val entries: Map<String, ByteArray>
+    field = mutableMapOf<String, ByteArray>()
+
     private val cached = mutableMapOf<String, Any?>()
 
     operator fun <T> get(key: String, serializer: KSerializer<T>): T? {
