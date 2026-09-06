@@ -1,0 +1,5 @@
+[versions]
+kafka-clients = "4.3.1"
+
+[libraries]
+clients = { module = "org.apache.kafka:kafka-clients", version.ref = "kafka-clients" }

@@ -21,6 +21,7 @@ dependencyResolutionManagement {
         create("kotlinx").from(files("version-catalogs/kotlinx.versions.toml"))
         create("codegen").from(files("version-catalogs/codegen.versions.toml"))
         create("libutils").from(files("version-catalogs/libutils.versions.toml"))
+        create("kafka").from(files("version-catalogs/kafka.versions.toml"))
     }
 }
 
