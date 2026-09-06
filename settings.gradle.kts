@@ -44,6 +44,7 @@ include(":message-broker:consumer")
 include(":kafka")
 include(":kafka:common")
 include(":kafka:publisher")
+include(":kafka:consumer")
 
 include(":serialization")
 include(":serialization:core")
