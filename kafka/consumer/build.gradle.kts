@@ -6,7 +6,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(projects.kafka.common)
-            api(projects.messageBroker.consumer)
+            api(projects.relay.consumer)
 
             implementation(kotlinx.coroutines)
         }

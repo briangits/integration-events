@@ -49,7 +49,7 @@ kotlin {
             implementation(projects.serialization.json)
 
             api(projects.metadata)
-            api(projects.messageBroker.publisher)
+            api(projects.relay.publisher)
 
             implementation(kotlinx.coroutines)
         }
