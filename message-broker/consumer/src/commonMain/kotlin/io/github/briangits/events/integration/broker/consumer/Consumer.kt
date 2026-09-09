@@ -5,7 +5,8 @@ import io.github.briangits.events.integration.broker.Route
 import kotlinx.coroutines.flow.Flow
 
 interface Consumer {
-    suspend fun consume(route: Route): Flow<Message>
-
+    suspend fun start()
     suspend fun close()
+
+    suspend fun consume(route: Route): Flow<Message>
 }
