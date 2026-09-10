@@ -52,3 +52,5 @@ include(":serialization:json")
 
 include(":producer")
 include(":consumer")
+
+include(":test")
