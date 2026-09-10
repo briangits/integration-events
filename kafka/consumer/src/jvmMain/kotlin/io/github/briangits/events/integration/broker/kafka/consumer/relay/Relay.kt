@@ -133,7 +133,7 @@ internal actual fun Relay(config: RelayConfig): Relay = object : Relay {
 
         for (record in records) {
             val message = Message(
-                route = Route(topic = record.topic(), ""),
+                route = Route(topic = record.topic()),
                 key = record.key()?.decodeToString(),
                 metadata = record.headers().associate { it.key() to it.value() },
                 data = record.value()

@@ -27,7 +27,7 @@ class Consumer(
         val definition = events[type] as? IntegrationEventDefinition<T>
             ?: error("No event definition found for ${type.eventClass.qualifiedName}")
 
-        return consumer.consume(route = Route(topic = definition.topic, name = definition.name))
+        return consumer.consume(route = Route(topic = definition.topic))
             .map {
                 @Suppress("UNCHECKED_CAST")
                 Event(
