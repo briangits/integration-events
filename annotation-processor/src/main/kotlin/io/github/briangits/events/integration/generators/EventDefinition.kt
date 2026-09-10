@@ -22,6 +22,27 @@ private data class EventDefinition(
     val key: String?
 )
 
+private fun KSClassDeclaration.propertyPathIsResolvable(
+    path: String
+): Boolean {
+    var currentClass = this
+
+    for (segment in path.split(".")) {
+        val property = currentClass
+            .getAllProperties()
+            .firstOrNull { it.simpleName.asString() == segment }
+            ?: return false
+
+        val nextClass = property.type.resolve().declaration
+                as? KSClassDeclaration
+            ?: return false
+
+        currentClass = nextClass
+    }
+
+    return true
+}
+
 private fun KSClassDeclaration.createDefinition(): EventDefinition {
     val annotation =
         this.annotations.first {
@@ -51,13 +72,10 @@ private fun KSClassDeclaration.createDefinition(): EventDefinition {
         }
 
     val key =
-        annotation.getArgument<String>("key").also {
-            val keyExists =
-                this.getAllProperties().any { prop ->
-                    prop.simpleName.asString() == it
-                }
+        annotation.getArgument<String>("key")?.also {
+            val keyExists = propertyPathIsResolvable(it)
 
-            if (!it.isNullOrEmpty() && !keyExists) {
+            if (!it.isEmpty() && !keyExists) {
                 throw DefinitionGenerationException(
                     "The defined key property '$it' for @IntegrationEvent " +
                             "$eventQualifiedName does not exist"
