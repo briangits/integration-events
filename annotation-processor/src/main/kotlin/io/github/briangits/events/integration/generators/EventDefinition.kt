@@ -38,7 +38,7 @@ private fun KSClassDeclaration.createDefinition(): EventDefinition {
 
     val eventQualifiedName = this.toClassName()
 
-    val name = annotation.getArgument("name") ?: "$eventQualifiedName"
+    val name = annotation.getArgument("name") ?: simpleName.asString()
     val topic =
         annotation.getArgument<String>("topic").let {
             if(it.isNullOrEmpty()) {
