@@ -22,25 +22,32 @@ private data class EventDefinition(
     val key: String?
 )
 
-private fun KSClassDeclaration.propertyPathIsResolvable(
+private fun KSClassDeclaration.resolvePropertyPath(
     path: String
-): Boolean {
-    var currentClass = this
+): String? = buildString {
+    var currentClass = this@resolvePropertyPath
 
-    for (segment in path.split(".")) {
+    val segments = path.split(".")
+
+    for ((index, segment) in segments.withIndex()) {
         val property = currentClass
             .getAllProperties()
             .firstOrNull { it.simpleName.asString() == segment }
-            ?: return false
+            ?: return null
 
-        val nextClass = property.type.resolve().declaration
+        append(segment)
+
+        if (index == segments.lastIndex) break
+
+        val isNullable = property.type.resolve().isMarkedNullable
+        if (isNullable) append("?")
+
+        append(".")
+
+        currentClass = property.type.resolve().declaration
                 as? KSClassDeclaration
-            ?: return false
-
-        currentClass = nextClass
+            ?: return null
     }
-
-    return true
 }
 
 private fun KSClassDeclaration.createDefinition(): EventDefinition {
@@ -72,15 +79,17 @@ private fun KSClassDeclaration.createDefinition(): EventDefinition {
         }
 
     val key =
-        annotation.getArgument<String>("key")?.also {
-            val keyExists = propertyPathIsResolvable(it)
+        annotation.getArgument<String>("key")?.let {
+            val resolvedPath = resolvePropertyPath(it)
 
-            if (!it.isEmpty() && !keyExists) {
+            if (!it.isEmpty() && resolvedPath == null) {
                 throw DefinitionGenerationException(
                     "The defined key property '$it' for @IntegrationEvent " +
                             "$eventQualifiedName does not exist"
                 )
             }
+
+            return@let resolvedPath
         }
 
     return EventDefinition(name, topic, key)
