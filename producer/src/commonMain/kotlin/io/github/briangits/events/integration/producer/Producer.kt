@@ -26,10 +26,16 @@ class Producer(
         val definition = events[type] as? IntegrationEventDefinition<T>
             ?: error("No event definition found for ${type.eventClass.qualifiedName}")
 
+        val metadata = Metadata(config.serializer).apply {
+            block()
+
+            "eventName" to definition.name
+        }
+
         val message = Message(
             route = Route(topic = definition.topic),
             key = definition.key(data)?.toString(),
-            metadata = Metadata(config.serializer).apply { block() }.entries,
+            metadata = metadata.entries,
             data = config.serializer.serialize(data, serializer(type.type))
         )
 

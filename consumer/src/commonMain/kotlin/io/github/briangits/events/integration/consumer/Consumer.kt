@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.serialization.serializer
@@ -28,7 +29,13 @@ class Consumer(
             ?: error("No event definition found for ${type.eventClass.qualifiedName}")
 
         return consumer.consume(route = Route(topic = definition.topic))
-            .map {
+            .filter {
+                val name = it.metadata["eventName"]?.let {
+                    config.serializer.deserialize(it, serializer<String>())
+                }
+
+                name == definition.name
+            }.map {
                 @Suppress("UNCHECKED_CAST")
                 Event(
                     data = config.serializer.deserialize(it.data, serializer(type.type)) as T,
