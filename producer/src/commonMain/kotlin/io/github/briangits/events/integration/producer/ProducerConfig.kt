@@ -6,10 +6,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 
 internal expect val defaultDispatcher: CoroutineDispatcher
 
-data class Config(
+class ProducerConfig(
     var dispatcher: CoroutineDispatcher = defaultDispatcher,
-    internal var serializer: Serializer = json()
+    internal var serializer: Serializer = json(),
+    block: ProducerConfig.() -> Unit = {}
 ) {
+    init { block() }
+
     fun serialization(block: () -> Serializer) {
         serializer = block()
     }

@@ -19,9 +19,9 @@ import io.github.briangits.events.integration.broker.consumer.Consumer as Relay
 
 class Consumer(
     val consumer: Relay,
-    config: Config.() -> Unit = {}
+    config: ConsumerConfig.() -> Unit = {}
 ) : IntegrationEventRegistry() {
-    private val config: Config = Config().apply { config() }
+    private val config = ConsumerConfig { config() }
 
     suspend fun <T : Any> consume(type: EventType<T>): Flow<Event<T>> {
         @Suppress("UNCHECKED_CAST")

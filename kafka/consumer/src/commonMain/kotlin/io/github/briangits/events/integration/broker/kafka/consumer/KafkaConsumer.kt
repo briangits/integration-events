@@ -10,9 +10,9 @@ import kotlinx.coroutines.flow.Flow
 class KafkaConsumer(
     val brokers: List<String>,
     val groupId: String,
-    config: ConsumerConfig.() -> Unit
+    config: KafkaConsumerConfig.() -> Unit = {}
 ) : Consumer {
-    private val config = ConsumerConfig(brokers, groupId).apply { config() }
+    private val config = KafkaConsumerConfig(brokers, groupId) { config() }
     private val relay: Relay by lazy {
         val config = RelayConfig(
             brokers = this.config.brokers,
@@ -26,6 +26,7 @@ class KafkaConsumer(
     }
 
     override suspend fun start() = relay.start()
+
     override suspend fun close() = relay.close()
 
     override suspend fun consume(route: Route): Flow<Message> = relay.consume(route)

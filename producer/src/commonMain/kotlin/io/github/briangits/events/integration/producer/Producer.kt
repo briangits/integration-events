@@ -13,9 +13,9 @@ import kotlinx.serialization.serializer
 
 class Producer(
     val publisher: Publisher,
-    config: Config.() -> Unit,
+    config: ProducerConfig.() -> Unit = {},
 ) : IntegrationEventRegistry() {
-    private val config = Config().apply { config() }
+    private val config = ProducerConfig { config() }
 
     suspend fun <T : Any> publish(
         data: T,
