@@ -41,7 +41,11 @@ class Producer(
 
         publisher.publish(message)
     }
-
-    suspend inline fun <reified T : Any> publish(data: T, noinline block: Metadata.() -> Unit) =
-        publish(data, type = eventType<T>(), block)
 }
+
+suspend inline fun <reified T : Any> Producer.publish(
+    data: T,
+    noinline block: Metadata.() -> Unit = {}
+) = publish(data, type = eventType<T>(), block)
+
+suspend inline fun <reified T : Any> Producer.publish(block: () -> T) = publish(data = block())
