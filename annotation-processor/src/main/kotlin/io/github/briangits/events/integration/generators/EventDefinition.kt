@@ -78,9 +78,9 @@ internal fun generateDefinition(declaration: KSClassDeclaration): GeneratedDefin
             add("%T(\n", definitionType)
 
             withIndent {
-                add("name = %S,\n", definition.name)
                 add("topic = %S,\n", definition.topic)
-                add("key = { %L }", definition.key ?: "null")
+                add("name = %S,\n", definition.name)
+                add("key = { %L }\n", definition.key ?: "null")
             }
 
             add(")")
