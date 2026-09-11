@@ -2,7 +2,7 @@ package io.github.briangits.events.integration.broker.kafka.consumer
 
 import io.github.briangits.events.integration.broker.Message
 import io.github.briangits.events.integration.broker.Route
-import io.github.briangits.events.integration.broker.consumer.Consumer
+import io.github.briangits.events.integration.broker.consumer.MessageConsumer
 import io.github.briangits.events.integration.broker.kafka.consumer.relay.Relay
 import io.github.briangits.events.integration.broker.kafka.consumer.relay.RelayConfig
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +11,7 @@ class KafkaConsumer(
     val brokers: List<String>,
     val groupId: String,
     config: KafkaConsumerConfig.() -> Unit = {}
-) : Consumer {
+) : MessageConsumer {
     private val config = KafkaConsumerConfig(brokers, groupId) { config() }
     private val relay: Relay by lazy {
         val config = RelayConfig(

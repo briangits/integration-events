@@ -15,10 +15,10 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.serialization.serializer
-import io.github.briangits.events.integration.broker.consumer.Consumer as Relay
+import io.github.briangits.events.integration.broker.consumer.MessageConsumer
 
 class Consumer(
-    val consumer: Relay,
+    val consumer: MessageConsumer,
     config: ConsumerConfig.() -> Unit = {}
 ) : IntegrationEventRegistry() {
     private val config = ConsumerConfig { config() }
