@@ -44,8 +44,6 @@ internal actual fun Relay(config: RelayConfig) = object : Relay {
 
         val record: ProducerRecord<ByteArray?, ByteArray> = message.let {
             ProducerRecord(it.route.topic, it.key?.encodeToByteArray(), it.data).apply {
-                headers().add("eventName", message.route.name.encodeToByteArray())
-
                 message.metadata.entries.forEach {
                     headers().add(it.key, it.value)
                 }
