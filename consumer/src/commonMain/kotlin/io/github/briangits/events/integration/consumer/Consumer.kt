@@ -26,7 +26,7 @@ class Consumer(
     suspend fun <T : Any> consume(type: EventType<T>): Flow<Event<T>> {
         @Suppress("UNCHECKED_CAST")
         val definition = events[type] as? IntegrationEventDefinition<T>
-            ?: error("No event definition found for ${type.eventClass.qualifiedName}")
+            ?: error("No event definition found for ${type.eventClass.simpleName}")
 
         return consumer.consume(route = Route(topic = definition.topic))
             .filter {

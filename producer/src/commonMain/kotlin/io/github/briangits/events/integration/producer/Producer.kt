@@ -24,7 +24,7 @@ class Producer(
     ) = withContext(config.dispatcher) {
         @Suppress("UNCHECKED_CAST")
         val definition = events[type] as? IntegrationEventDefinition<T>
-            ?: error("No event definition found for ${type.eventClass.qualifiedName}")
+            ?: error("No event definition found for ${type.eventClass.simpleName}")
 
         val metadata = Metadata(config.serializer).apply {
             block()
