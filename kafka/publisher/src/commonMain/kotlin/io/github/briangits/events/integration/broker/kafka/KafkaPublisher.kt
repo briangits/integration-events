@@ -1,25 +1,21 @@
 package io.github.briangits.events.integration.broker.kafka
 
 import io.github.briangits.events.integration.broker.Message
-import io.github.briangits.events.integration.broker.kafka.relay.Relay
-import io.github.briangits.events.integration.broker.kafka.relay.RelayConfig
+import io.github.briangits.events.integration.broker.kafka.producer.Producer
+import io.github.briangits.events.integration.broker.kafka.producer.createOptions
 import io.github.briangits.events.integration.broker.publisher.Publisher
+import kotlinx.coroutines.withContext
 
 class KafkaPublisher(
     brokers: List<String>,
-    config: KafkaPublisherConfig.() -> Unit = {}
+    configBlock: KafkaPublisherConfig.() -> Unit = {}
 ) : Publisher {
-    private val config = KafkaPublisherConfig(brokers) { config() }
+    private val config = KafkaPublisherConfig(brokers) { configBlock() }
 
-    private val relay by lazy {
-        val config = RelayConfig(
-            brokers = this.config.brokers
-        )
+    private val producer by lazy { Producer(options = createOptions(config)) }
 
-        Relay(config)
-    }
+    override suspend fun publish(message: Message) =
+        withContext(config.dispatcher) { producer.publish(message) }
 
-    override suspend fun publish(message: Message) = relay.publish(message)
-
-    override suspend fun close() = relay.close()
+    override suspend fun close() = withContext(config.dispatcher) { producer.close() }
 }
