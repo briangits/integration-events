@@ -75,10 +75,16 @@ internal actual fun Consumer(options: ConsumerOptions): Consumer =
                         if (subscriptions.isNotEmpty()) {
                             updateSubscriptions()
 
-                            consumer.poll(options.pollTimeout.toJavaDuration())
-                                .takeUnless { it.isEmpty }
-                                ?.let { processBatch(it) }
-                        } else delay(100.milliseconds)
+                            if (subscribedTopics.isNotEmpty()) {
+                                consumer.poll(options.pollTimeout.toJavaDuration())
+                                    .takeUnless { it.isEmpty }
+                                    ?.let { processBatch(it) }
+
+                                continue
+                            }
+                        }
+
+                        delay(100.milliseconds)
                     }
                 } catch (e: WakeupException) {
                     if (!closed) throw e
