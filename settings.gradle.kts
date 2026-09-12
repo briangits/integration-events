@@ -22,6 +22,7 @@ dependencyResolutionManagement {
         create("codegen").from(files("version-catalogs/codegen.versions.toml"))
         create("libutils").from(files("version-catalogs/libutils.versions.toml"))
         create("kafka").from(files("version-catalogs/kafka.versions.toml"))
+        create("testcontainers").from(files("version-catalogs/testcontainers.versions.toml"))
     }
 }
 
