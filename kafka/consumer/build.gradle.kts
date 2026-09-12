@@ -14,5 +14,18 @@ kotlin {
         jvmMain.dependencies {
             api(kafka.clients)
         }
+
+        commonTest.dependencies {
+            implementation(kt.test)
+
+            // Coroutines
+            implementation(kotlinx.coroutines.test)
+        }
+
+        jvmTest.dependencies {
+            // Test Containers
+            implementation(testcontainers.core)
+            implementation(testcontainers.kafka)
+        }
     }
 }
